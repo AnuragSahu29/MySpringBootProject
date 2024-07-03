@@ -1,0 +1,38 @@
+package com.anuragsahu.journalApp.controller;
+
+import com.anuragsahu.journalApp.entity.JournalEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+@RestController
+@RequestMapping("/journal")
+public class journalEntryController {
+ private Map<Long,JournalEntity> JournalEntities= new HashMap<>();
+
+ @GetMapping
+ public List<JournalEntity> getall(){
+     return new ArrayList<>(JournalEntities.values());
+ }
+@PostMapping
+    public boolean createEntity(@RequestBody JournalEntity myEntry) {
+     JournalEntities.put(myEntry.getId(), myEntry);
+     return true;
+}
+@GetMapping("/id/{myId}")
+public JournalEntity getJournalEntityById(@PathVariable Long myId){
+         return JournalEntities.get(myId);
+    }
+@DeleteMapping("/id/{myId}")
+    public JournalEntity DeleteJournalEntityById(@PathVariable Long myId){
+        return JournalEntities.remove(myId);
+}
+@PutMapping("/id/{myId}")
+    public JournalEntity UpdateJournalEntityById(@PathVariable Long myId,@RequestBody JournalEntity myEntry){
+        return JournalEntities.put(myId,myEntry);
+    }
+
+
+}
